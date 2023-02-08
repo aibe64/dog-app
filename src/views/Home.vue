@@ -14,3 +14,14 @@ onBeforeMount(() => {
    </div>
   </main>
 </template>
+
+<style lang="scss" scoped>
+div.card-wrapper {
+  // padding: 30px 0;
+  display: flex;
+  flex-flow: row wrap;
+  gap: 30px 20px;
+  justify-content: center;
+  align-items: center;
+}
+</style>
