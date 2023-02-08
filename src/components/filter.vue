@@ -1,26 +1,43 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const isDisabledSelect = ref(false)
-function handleDogBreedSelect () {
-  console.log('Breed Selected')
-}
+const emit = defineEmits<{
+  (e: 'breedSelect', breed: string): void
+  (e: 'filter', searchText: string): void
+}>()
+
+const isDisabledSelect = ref<boolean>(false)
+
+const breed = ref<string>('')
+const searchText = ref<string>('')
+
+const handleBreedSelect = (): void => emit('breedSelect', searchText.value)
+const handleFilter = (): void => emit('filter', searchText.value)
 </script>
 
 <template>
   <div class="filter">
     <select
-      @select="handleDogBreedSelect"
+      v-model="breed"  
       :disabled="isDisabledSelect"
+      @change="handleBreedSelect"
     >
       <option value="">Select Breed</option>
-      <option value="">Option 1</option>
-      <option value="">Option 2</option>
-      <option value="">Option 3</option>
+      <option value="1">Option 1</option>
+      <option value="2">Option 2</option>
+      <option value="3">Option 3</option>
     </select>
 
     <!-- search input -->
-    <input type="search" name="search" id="search" placeholder="Search dogs...">
+    <input
+      type="search"
+      name="search"
+      id="search"
+      placeholder="Search dogs..."
+      v-model="searchText"
+      :disabled="isDisabledSelect"
+      @input="handleFilter"
+    />
   </div>
 </template>
 
@@ -40,6 +57,7 @@ div.filter {
     padding: 10px;
     font-size: 16px;
     transition: $transition;
+    background-color: #fff;
     
     &:focus {
       border: none;
@@ -48,6 +66,10 @@ div.filter {
 
     &::placeholder {
       color: rgb(178, 178, 178);
+    }
+
+    &:disabled {
+      background-color: #efefef;
     }
   }
 

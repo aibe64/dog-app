@@ -4,6 +4,14 @@ import { onBeforeMount } from 'vue'
 import Filter from '@/components/filter.vue'
 import DogFigure from '@/components/dogFigure.vue'
 
+const handleBreedSelect = (value: string): void => {
+  console.log(value)
+}
+
+const handleFilter = (value: string): void => {
+  console.log(value)
+}
+
 onBeforeMount(() => {
   // console.log(1234)
 })
@@ -11,7 +19,10 @@ onBeforeMount(() => {
 
 <template>
   <main>
-    <Filter />
+    <Filter
+      @breedSelect="handleBreedSelect"
+      @filter="handleFilter"
+    />
     <div class="card-wrapper">
       <DogFigure img-url="../assets/logo.jpg"/>
     </div>

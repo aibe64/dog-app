@@ -4,7 +4,8 @@ import AppHeader from './components/appHeader.vue'
 import Loading from '@/components/loading.vue'
 import { ref } from 'vue';
 
-const isLoading = ref(false)
+const isLoading = ref<boolean>(false)
+
 </script>
 
 <template>
@@ -20,8 +21,7 @@ const isLoading = ref(false)
 <style lang="scss" scoped>
 div.page-wrapper {
   main {
-    // min-height: calc(100vh - 100px);
-    min-height: calc(100vh - 100px);
+    min-height: calc(100vh - 120px);
     background-color: $route-bg;
   }
 }

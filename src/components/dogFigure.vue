@@ -29,7 +29,7 @@ const qqqq = ref(null)
 
 <style lang="scss" scoped>
 figure {
-  border: 1px solid $primary-2;
+  border: 1px solid rgb(237, 237, 237);
   border-radius: 5px;
   padding: 15px 20px;
   width: fit-content;
@@ -43,7 +43,7 @@ figure {
 
   &:hover {
     border-radius: 0;
-    box-shadow: 1px 1px 10px rgb(216, 216, 216), 5px 5px 10px $primary-shadow;
+    box-shadow: -5px -5px 30px rgb(216, 216, 216), 5px 10px 30px rgb(216, 216, 216);
   }
 
   a {
