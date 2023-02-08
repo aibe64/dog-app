@@ -12,7 +12,7 @@ const qqqq = ref(null)
 </script>
 
 <template>
-  <figure v-for="dog in 100" :key="dog">
+  <figure v-for="dog in 4" :key="dog">
     <router-link to="/dog_info/1">
       <img
         ref="qqqq"
@@ -29,7 +29,7 @@ const qqqq = ref(null)
 
 <style lang="scss" scoped>
 figure {
-  border: 1px solid rgb(222, 222, 222);
+  border: 1px solid $primary-2;
   border-radius: 5px;
   padding: 15px 20px;
   width: fit-content;
@@ -38,11 +38,12 @@ figure {
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
-  transition: all 0.5s;
+  transition: $transition;
+  background-color: #fff;
 
   &:hover {
     border-radius: 0;
-    box-shadow: 1px 1px 10px rgb(189, 189, 189), 5px 5px 10px rgb(224, 224, 224);
+    box-shadow: 1px 1px 10px rgb(216, 216, 216), 5px 5px 10px $primary-shadow;
   }
 
   a {
@@ -52,7 +53,7 @@ figure {
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    color: black;
+    color: $dark;
 
     &>img {
       width: auto;
@@ -61,7 +62,8 @@ figure {
 
     &>div {
       &>h5 {
-        font-size: 20px;
+        font-size: 22px;
+        color: $primary;
       }
     }
   }

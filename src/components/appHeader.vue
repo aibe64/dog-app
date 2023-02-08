@@ -15,6 +15,7 @@
 <style lang="scss" scoped>
 header {
   max-height: 100px;
+  padding: 10px 20px;
 
   div {
     width: max-content;
@@ -29,7 +30,7 @@ header {
         margin-left: -8px;
         font-size: 40px;
         font-weight: bold;
-        color: rgb(225, 225, 225);
+        color: $primary;
       }
 
       .logo {
