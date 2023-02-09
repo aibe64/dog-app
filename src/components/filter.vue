@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+defineProps<{
+  dogsBreedList: string[]
+}>()
+
 const emit = defineEmits<{
   (e: 'breedSelect', breed: string): void
   (e: 'filter', searchText: string): void
@@ -11,7 +15,7 @@ const isDisabledSelect = ref<boolean>(false)
 const breed = ref<string>('')
 const searchText = ref<string>('')
 
-const handleBreedSelect = (): void => emit('breedSelect', searchText.value)
+const handleBreedSelect = (): void => emit('breedSelect', breed.value)
 const handleFilter = (): void => emit('filter', searchText.value)
 </script>
 
@@ -23,9 +27,7 @@ const handleFilter = (): void => emit('filter', searchText.value)
       @change="handleBreedSelect"
     >
       <option value="">Select Breed</option>
-      <option value="1">Option 1</option>
-      <option value="2">Option 2</option>
-      <option value="3">Option 3</option>
+      <option v-for="(breed, index) in dogsBreedList">{{ breed }}</option>
     </select>
 
     <!-- search input -->

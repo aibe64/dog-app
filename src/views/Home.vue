@@ -11,6 +11,7 @@ import Loading from '@/components/loading.vue'
 const { state, getters, commit, dispatch } = useStore(key)
 
 const isLoading = computed<boolean>(() => getters._isLoading)
+const dogsBreedList = computed<string[]>(() => getters._dogsBreedList)
 const dogsList = computed<string[]>(() => getters._dogs)
 
 const handleBreedSelect = (value: string): void => {
@@ -21,19 +22,16 @@ const handleFilter = (value: string): void => {
   console.log(value, state)
 }
 
-onBeforeMount(() => {
+onBeforeMount(async () => {
   // init loading state
   commit('IS_LOADING', true)
 
-  // fetch random dog info
-  dispatch('fetchRandomDogBreeds')
-    .then((response => {
-      console.log(response)
-    }))
-    .catch((error => {
-      console.log(error.message)
-    }))
-
+  await Promise.all([
+    // fetch random dog info
+    dispatch('fetchRandomDogBreeds'),
+    // fetch dog breed list
+    dispatch('fetchDogsBreedList')
+  ])
   
   // stop loading state
   setTimeout(() => commit('IS_LOADING', false), 4000)
@@ -45,6 +43,7 @@ onBeforeMount(() => {
   <Loading v-if="isLoading" />
   <main v-else>
     <Filter
+      :dogsBreedList="dogsBreedList"
       @breedSelect="handleBreedSelect"
       @filter="handleFilter"
     />

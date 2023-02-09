@@ -29,9 +29,9 @@ export const store = createStore<DogsState>({
         .then(data => {
           const { status, message } = data
 
-          if (status === 'success') {
+          if (status === 'success') {            
             // save data in store
-            commit('SAVE_DOGS_DATA', [...message])
+            commit('SAVE_DOG_BREED_LIST', Object.keys(message))
           }
           return data
         })
