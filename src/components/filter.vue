@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 
 defineProps<{
+  isLoading: boolean
   dogsBreedList: string[]
 }>()
 
@@ -10,12 +11,13 @@ const emit = defineEmits<{
   (e: 'filter', searchText: string): void
 }>()
 
-const isDisabledSelect = ref<boolean>(false)
-
 const breed = ref<string>('')
 const searchText = ref<string>('')
 
-const handleBreedSelect = (): void => emit('breedSelect', breed.value)
+const handleBreedSelect = (): void => {
+  if (breed.value.length) emit('breedSelect', breed.value)
+}
+
 const handleFilter = (): void => emit('filter', searchText.value)
 </script>
 
@@ -23,11 +25,11 @@ const handleFilter = (): void => emit('filter', searchText.value)
   <div class="filter">
     <select
       v-model="breed"  
-      :disabled="isDisabledSelect"
+      :disabled="isLoading"
       @change="handleBreedSelect"
     >
       <option value="">Select Breed</option>
-      <option v-for="(breed, index) in dogsBreedList">{{ breed }}</option>
+      <option v-for="(breed, index) in dogsBreedList" :key="index" :value="breed">{{ breed }}</option>
     </select>
 
     <!-- search input -->
@@ -37,7 +39,7 @@ const handleFilter = (): void => emit('filter', searchText.value)
       id="search"
       placeholder="Search dogs..."
       v-model="searchText"
-      :disabled="isDisabledSelect"
+      :disabled="isLoading"
       @input="handleFilter"
     />
   </div>

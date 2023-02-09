@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeMount, onMounted } from 'vue'
+import { computed, onBeforeMount, onMounted, ref } from 'vue'
 
 import { useStore } from 'vuex'
 import { key } from '@/store/index'
@@ -8,18 +8,30 @@ import Filter from '@/components/filter.vue'
 import DogFigure from '@/components/dogFigure.vue'
 import Loading from '@/components/loading.vue'
 
-const { state, getters, commit, dispatch } = useStore(key)
+const { getters, commit, dispatch } = useStore(key)
+
+const searchString = ref<string>('')
 
 const isLoading = computed<boolean>(() => getters._isLoading)
 const dogsBreedList = computed<string[]>(() => getters._dogsBreedList)
-const dogsList = computed<string[]>(() => getters._dogs)
+const dogs = computed<string[]>(() => getters._dogs)
 
-const handleBreedSelect = (value: string): void => {
-  console.log(value)
+const dogsList = computed<string[]>(() => {
+  return dogs.value?.filter(dog => dog.includes(searchString?.value.toString()))
+})
+
+const handleBreedSelect = async (breed: string) => {
+  // init loading state
+  commit('IS_LOADING', true)
+
+  // fetch dogs by breed
+  await dispatch('fetchDogsByBreed', breed)
+    .then(() => commit('IS_LOADING', false))
+    .catch(() => commit('IS_LOADING', false))
 }
 
 const handleFilter = (value: string): void => {
-  console.log(value, state)
+  searchString.value = value
 }
 
 onBeforeMount(async () => {
@@ -32,22 +44,21 @@ onBeforeMount(async () => {
     // fetch dog breed list
     dispatch('fetchDogsBreedList')
   ])
-  
-  // stop loading state
-  setTimeout(() => commit('IS_LOADING', false), 4000)
-
+    .then(() => setTimeout(() => commit('IS_LOADING', false), 3000))
+    .catch(() => setTimeout(() => commit('IS_LOADING', false), 3000))
 })
 </script>
 
 <template>
-  <Loading v-if="isLoading" />
-  <main v-else>
+  <main>
     <Filter
+      :isLoading="isLoading"
       :dogsBreedList="dogsBreedList"
       @breedSelect="handleBreedSelect"
       @filter="handleFilter"
     />
-    <DogFigure :dogsList="dogsList"/>
+    <Loading v-if="isLoading" />
+    <DogFigure v-else :dogsList="dogsList"/>
   </main>
 </template>
 

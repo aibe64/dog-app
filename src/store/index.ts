@@ -50,8 +50,21 @@ export const store = createStore<DogsState>({
           return data
         })
         .catch(error => error)
+    },
+    fetchDogsByBreed: async ({ commit }, breed) => {
+      return await request(`/breed/${breed}/images`, {})
+      .then(resp => resp.json())
+        .then(data => {
+          const { status, message } = data
+          
+          if (status === 'success') {
+            // save data in store
+            commit('SAVE_DOGS_DATA', message)
+          }
+          return data
+        })
+        .catch(error => error)
     }
-    // 
   },
   mutations: {
     IS_LOADING: (state, val: boolean) => {
