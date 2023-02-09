@@ -47,12 +47,15 @@ const handleFilter = (): void => emit('filter', searchText.value)
 
 <style lang="scss" scoped>
 div.filter {
+  position: sticky;
+  top: 0px;
   padding: 20px;
   display: flex;
   flex-flow: row wrap;
   column-gap: 20px;
   justify-content: flex-start;
   align-items: center;
+  background-color: $route-bg;
 
   &>select,
   &>input {

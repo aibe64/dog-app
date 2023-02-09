@@ -12,7 +12,7 @@ const img = ref(null)
   <section>
     <div v-if="dogsList?.length" class="card-wrapper">
       <figure v-for="(dog, index) in dogsList" :key="index">
-        <router-link to="/dog_info/1">
+        <router-link :to="{ name: 'dog info', query: { imgSrc: JSON.stringify(dog) }}">
           <img
             ref="img"
             alt="Dog image"
@@ -81,7 +81,7 @@ section {
 
           &>div {
             &>h5 {
-              font-size: 22px;
+              font-size: 18px;
               color: $primary;
             }
           }
