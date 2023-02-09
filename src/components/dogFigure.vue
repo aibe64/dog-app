@@ -1,29 +1,62 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue'
 
 defineProps<{
   dogsList: string[]
 }>()
 
-const img = ref(null)
+const scrollArea = ref(null)
+const figure = ref(null)
+
+onMounted(() => {
+  let figures = Array.from(figure.value as any)
+
+  let options = {
+    root: scrollArea.value as any,
+    rootMargin: '0px',
+    threshold: 1.0
+  }
+  
+  const callback = (entries: any, observer: any) => {
+    let dataSrc
+
+    for (const entry of entries) {
+      if (entry.intersectionRatio > 0) {
+        dataSrc = entry.target.firstChild.firstChild.dataset.url
+        // console.log(dataSrc)
+        entry.target.firstChild.firstChild.setAttribute('src', dataSrc)
+
+        // console.log(entry)
+      }
+    }
+  }
+  
+  let observer = new IntersectionObserver(callback, options)
+
+  figures.forEach(figure => {
+    observer.observe(figure as any)
+  })
+  
+})
 </script>
 
 <template>
-  <section>
-    <div v-if="dogsList?.length" class="card-wrapper">
-      <figure v-for="(dog, index) in dogsList" :key="index">
-        <router-link :to="{ name: 'dog info', query: { imgSrc: JSON.stringify(dog) }}">
-          <img
-            ref="img"
-            alt="Dog image"
-            :src="dog"
-          />
-          <div>
-            <h5>{{ dog }}</h5>
-          </div>
-        </router-link>
-      </figure>
-    </div>
+  <section ref="scrollArea">
+    <transition v-if="dogsList?.length">
+      <div class="card-wrapper">
+        <figure v-for="(dog, index) in dogsList" :key="index" ref="figure">
+          <router-link :to="{ name: 'dog info', query: { imgSrc: JSON.stringify(dog) }}">
+            <img
+              alt="Dog image"
+              :data-url="dog"
+            />
+            <div>
+              <h5>{{ dog }}</h5>
+            </div>
+          </router-link>
+        </figure>
+      </div>
+    </transition>
     <h3 v-else>No record found</h3>
   </section>
 </template>

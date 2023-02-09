@@ -12,15 +12,15 @@ export const key: InjectionKey<Store<DogsState>> = Symbol()
 export const store = createStore<DogsState>({
   state: () => {
     return {
-      isLoading: true,
-      dogsBreedList: [],
-      dogs: []
+      isLoading: false,
+      dogsBreedList: JSON.parse(sessionStorage.getItem('dogsBreedList') as string),
+      dogs: JSON.parse(sessionStorage.getItem('dogs') as string)
     }
   },
   getters: {
     _isLoading: (state: DogsState): boolean => state.isLoading,
-    _dogs: (state: DogsState): string[] => state.dogs,
-    _dogsBreedList: (state: DogsState): string[] => state.dogsBreedList
+    _dogs: (state: DogsState): any[] => state.dogs,
+    _dogsBreedList: (state: DogsState): any[] => state.dogsBreedList
   },
   actions: {
     fetchDogsBreedList: async ({ commit }, breed: string) => {
@@ -71,10 +71,10 @@ export const store = createStore<DogsState>({
       state.isLoading = val
     },
     SAVE_DOG_BREED_LIST: (state, data: string[]) => {
-      state.dogsBreedList = data
+      sessionStorage.setItem('dogsBreedList', JSON.stringify(data))
     },
     SAVE_DOGS_DATA: (state, data: string[]) => {
-      state.dogs = data
+      sessionStorage.setItem('dogs', JSON.stringify(data))
     }
   }
 })

@@ -57,11 +57,6 @@ div {
     transition: $transition;
     background-color: #fff;
 
-    // &:hover {
-    //   border-radius: 0;
-    //   box-shadow: -5px -5px 30px rgb(216, 216, 216), 5px 10px 30px rgb(216, 216, 216);
-    // }
-
     &>img {
       width: auto;
       height: 300px;

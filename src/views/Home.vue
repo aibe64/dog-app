@@ -35,17 +35,20 @@ const handleFilter = (value: string): void => {
 }
 
 onBeforeMount(async () => {
-  // init loading state
-  commit('IS_LOADING', true)
+  // check if data exists in local storage
+  if (!dogsBreedList.value.length  && !dogs.value.length ) {
+    // init loading state
+    commit('IS_LOADING', true)
 
-  await Promise.all([
-    // fetch random dog info
-    dispatch('fetchRandomDogBreeds'),
-    // fetch dog breed list
-    dispatch('fetchDogsBreedList')
-  ])
-    .then(() => setTimeout(() => commit('IS_LOADING', false), 2000))
-    .catch(() => setTimeout(() => commit('IS_LOADING', false), 2000))
+    await Promise.all([
+      // fetch random dog info
+      dispatch('fetchRandomDogBreeds'),
+      // fetch dog breed list
+      dispatch('fetchDogsBreedList')
+    ])
+      .then(() => setTimeout(() => commit('IS_LOADING', false), 2000))
+      .catch(() => setTimeout(() => commit('IS_LOADING', false), 2000))
+  }
 })
 </script>
 
