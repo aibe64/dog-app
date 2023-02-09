@@ -37,53 +37,55 @@ section {
   justify-content: center;
   align-items: center;
 
-  // dog wrapper
-  &.card-wrapper {
-    padding: 20px 10px;
-    display: flex;
-    flex-flow: row wrap;
-    gap: 20px 15px;
-    justify-content: center;
-    align-items: center;
-
-    &>figure {
-      border: 1px solid rgb(237, 237, 237);
-      border-radius: 5px;
-      padding: 15px 20px;
-      width: 220px;
-      height: 300px;
+  &>div {
+    // dog wrapper
+    &.card-wrapper {
+      padding: 20px 10px;
       display: flex;
       flex-flow: row wrap;
+      gap: 20px 15px;
       justify-content: center;
       align-items: center;
-      transition: $transition;
-      background-color: #fff;
-      word-break: break-all;
 
-
-      &:hover {
-        border-radius: 0;
-        box-shadow: -5px -5px 30px rgb(216, 216, 216), 5px 10px 30px rgb(216, 216, 216);
-      }
-
-      a {
+      &>figure {
+        border: 1px solid rgb(237, 237, 237);
+        border-radius: 5px;
+        padding: 15px 20px;
+        width: 220px;
+        height: 300px;
         display: flex;
-        flex-direction: column;
-        row-gap: 10px;
+        flex-flow: row wrap;
         justify-content: center;
         align-items: center;
-        text-decoration: none;
-        color: $dark;
+        transition: $transition;
+        background-color: #fff;
+        word-break: break-all;
 
-        &>img {
-          width: 180px;
-          height: 180px;
+
+        &:hover {
+          border-radius: 0;
+          box-shadow: -5px -5px 30px rgb(216, 216, 216), 5px 10px 30px rgb(216, 216, 216);
         }
 
-        &>div {
-          &>h5 {
-            font-size: 22px;
-            color: $primary;
+        a {
+          display: flex;
+          flex-direction: column;
+          row-gap: 10px;
+          justify-content: center;
+          align-items: center;
+          text-decoration: none;
+          color: $dark;
+
+          &>img {
+            width: 180px;
+            height: 180px;
+          }
+
+          &>div {
+            &>h5 {
+              font-size: 22px;
+              color: $primary;
+            }
           }
         }
       }
