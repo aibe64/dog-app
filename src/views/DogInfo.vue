@@ -1,14 +1,21 @@
 <script setup lang="ts">
-import { onBeforeMount, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { computed, onBeforeMount, ref } from 'vue'
+import { useRoute } from 'vue-router'
 
-const route = useRoute().params?.dog
+import { useStore } from 'vuex'
+import { key } from '@/store/index'
 
-const img = ref<HTMLImageElement | null>(null)
+const { getters } = useStore(key)
+
+const route = useRoute()
+
+const imgSrc = ref<string>('')
+
+const isLoading = computed<boolean>(() => getters._isLoading)
 
 onBeforeMount(() => {
-  console.log(img)
-  console.log(route)
+  // update image src attribute
+  imgSrc.value = (JSON.parse(route.query.imgSrc as string)) as string
 })
 
 </script>
@@ -17,12 +24,11 @@ onBeforeMount(() => {
   <div>
     <figure>
       <img
-        ref="img"
         alt="Dog image"
-        src="../assets/logo.jpg"
+        :src="imgSrc"
       />
       <div>
-        <h5>Dog Name</h5>
+        <h5>{{ imgSrc }}</h5>
       </div>
     </figure>
   </div>
