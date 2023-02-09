@@ -41,22 +41,21 @@ onMounted(() => {
 </script>
 
 <template>
-  <section ref="scrollArea">
-    <transition v-if="dogsList?.length">
-      <div class="card-wrapper">
-        <figure v-for="(dog, index) in dogsList" :key="index" ref="figure">
-          <router-link :to="{ name: 'dog info', query: { imgSrc: JSON.stringify(dog) }}">
-            <img
-              alt="Dog image"
-              :data-url="dog"
-            />
-            <div>
-              <h5>{{ dog }}</h5>
-            </div>
-          </router-link>
-        </figure>
-      </div>
-    </transition>
+  <section>
+    <div v-if="dogsList?.length" class="card-wrapper">
+      <figure v-for="(dog, index) in dogsList" :key="index">
+        <router-link to="/dog_info/1">
+          <img
+            ref="img"
+            alt="Dog image"
+            :src="dog"
+          />
+          <div>
+            <h5>{{ dog }}</h5>
+          </div>
+        </router-link>
+      </figure>
+    </div>
     <h3 v-else>No record found</h3>
   </section>
 </template>
