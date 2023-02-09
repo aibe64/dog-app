@@ -1,4 +1,4 @@
 export interface DogsState {
     isLoading: boolean,
-    dogs: []
+    dogs: string[]
 }

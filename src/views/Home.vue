@@ -11,6 +11,7 @@ import Loading from '@/components/loading.vue'
 const { state, getters, commit, dispatch } = useStore(key)
 
 const isLoading = computed<boolean>(() => getters._isLoading)
+const dogsList = computed<string[]>(() => getters._dogs)
 
 const handleBreedSelect = (value: string): void => {
   console.log(value)
@@ -24,9 +25,19 @@ onBeforeMount(() => {
   // init loading state
   commit('IS_LOADING', true)
 
-})
-onMounted(() => {
-  console.log(isLoading.value)
+  // fetch random dog info
+  dispatch('fetchRandomDogBreeds')
+    .then((response => {
+      console.log(response)
+    }))
+    .catch((error => {
+      console.log(error.message)
+    }))
+
+  
+  // stop loading state
+  setTimeout(() => commit('IS_LOADING', false), 4000)
+
 })
 </script>
 
@@ -37,22 +48,12 @@ onMounted(() => {
       @breedSelect="handleBreedSelect"
       @filter="handleFilter"
     />
-    <div class="card-wrapper">
-      <DogFigure img-url="../assets/logo.jpg"/>
-    </div>
+    <DogFigure :dogsList="dogsList"/>
   </main>
 </template>
 
 <style lang="scss" scoped>
 main {
   min-height: calc(100vh - 100px);
-  div.card-wrapper {
-    padding: 20px 0;
-    display: flex;
-    flex-flow: row wrap;
-    gap: 30px 20px;
-    justify-content: center;
-    align-items: center;
-  }
 }
 </style>

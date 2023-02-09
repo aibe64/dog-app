@@ -16,14 +16,32 @@ export const store = createStore<DogsState>({
   },
   getters: {
     _isLoading: (state: DogsState): boolean => state.isLoading,
-    _dogs: (state: DogsState): [] => state.dogs
+    _dogs: (state: DogsState): string[] => state.dogs
   },
   actions: {
-    fetchRandomDogBreeds: () => {}
+    fetchRandomDogBreeds: async ({ commit }) => {
+      return await fetch(
+        `https://dog.ceo/api/breeds/image/random/${100}`
+      )
+        .then(resp => resp.json())
+        .then(data => {
+          const { status, message } = data
+
+          if (status === 'success') {
+            // save data in store
+            commit('SAVE_DOGS_DATA', message)
+          }
+          return data
+        })
+        .catch(error => error)
+    }
   },
   mutations: {
-    IS_LOADING: (state: DogsState, val: boolean) => {
+    IS_LOADING: (state, val: boolean) => {
       state.isLoading = val
+    },
+    SAVE_DOGS_DATA: (state, data: string[]) => {
+      state.dogs = data
     }
   }
 })

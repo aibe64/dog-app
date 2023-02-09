@@ -1,69 +1,91 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-defineProps({
-  imgUrl: {
-    type: String,
-    required: true
-  }
-})
+const props = defineProps<{
+  dogsList: string[]
+}>()
 
-const qqqq = ref(null)
+console.log(props.dogsList)
+
+const img = ref(null)
 </script>
 
 <template>
-  <figure v-for="dog in 4" :key="dog">
-    <router-link to="/dog_info/1">
-      <img
-        ref="qqqq"
-        alt="Dog image"
-        src="../assets/logo.jpg"
-        :data-url="imgUrl"
-      />
-      <div>
-        <h5>{{ 'Dog ' + dog }}</h5>
-      </div>
-    </router-link>
-  </figure>
+  <section>
+    <div v-if="dogsList?.length" class="card-wrapper">
+      <figure v-for="(dog, index) in dogsList" :key="index">
+        <router-link to="/dog_info/1">
+          <img
+            ref="img"
+            alt="Dog image"
+            :src="dog"
+          />
+          <div>
+            <h5>{{ dog }}</h5>
+          </div>
+        </router-link>
+      </figure>
+    </div>
+    <h3 v-else>No record found</h3>
+  </section>
 </template>
 
 <style lang="scss" scoped>
-figure {
-  border: 1px solid rgb(237, 237, 237);
-  border-radius: 5px;
-  padding: 15px 20px;
-  width: fit-content;
-  height: fit-content;
+section {
   display: flex;
-  flex-flow: row wrap;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: $transition;
-  background-color: #fff;
 
-  &:hover {
-    border-radius: 0;
-    box-shadow: -5px -5px 30px rgb(216, 216, 216), 5px 10px 30px rgb(216, 216, 216);
-  }
-
-  a {
+  // dog wrapper
+  &.card-wrapper {
+    padding: 20px 10px;
     display: flex;
-    flex-direction: column;
-    row-gap: 10px;
+    flex-flow: row wrap;
+    gap: 20px 15px;
     justify-content: center;
     align-items: center;
-    text-decoration: none;
-    color: $dark;
 
-    &>img {
-      width: auto;
-      height: 250px;
-    }
+    &>figure {
+      border: 1px solid rgb(237, 237, 237);
+      border-radius: 5px;
+      padding: 15px 20px;
+      width: 220px;
+      height: 300px;
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+      align-items: center;
+      transition: $transition;
+      background-color: #fff;
+      word-break: break-all;
 
-    &>div {
-      &>h5 {
-        font-size: 22px;
-        color: $primary;
+
+      &:hover {
+        border-radius: 0;
+        box-shadow: -5px -5px 30px rgb(216, 216, 216), 5px 10px 30px rgb(216, 216, 216);
+      }
+
+      a {
+        display: flex;
+        flex-direction: column;
+        row-gap: 10px;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        color: $dark;
+
+        &>img {
+          width: 180px;
+          height: 180px;
+        }
+
+        &>div {
+          &>h5 {
+            font-size: 22px;
+            color: $primary;
+          }
+        }
       }
     }
   }
