@@ -15,7 +15,12 @@ const breed = ref<string>('')
 const searchText = ref<string>('')
 
 const handleBreedSelect = (): void => {
-  if (breed.value.length) emit('breedSelect', breed.value)
+  if (breed.value.length) {
+    // clear search input
+    searchText.value = ''
+    
+    emit('breedSelect', breed.value)
+  }
 }
 
 const handleFilter = (): void => emit('filter', searchText.value)

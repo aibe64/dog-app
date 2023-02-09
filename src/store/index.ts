@@ -13,14 +13,14 @@ export const store = createStore<DogsState>({
   state: () => {
     return {
       isLoading: false,
-      dogsBreedList: JSON.parse(sessionStorage.getItem('dogsBreedList') as string),
-      dogs: JSON.parse(sessionStorage.getItem('dogs') as string)
+      dogsBreedList: [],
+      dogs: []
     }
   },
   getters: {
     _isLoading: (state: DogsState): boolean => state.isLoading,
-    _dogs: (state: DogsState): any[] => state.dogs,
-    _dogsBreedList: (state: DogsState): any[] => state.dogsBreedList
+    _dogsBreedList: (state: DogsState): any[] => state.dogsBreedList,
+    _dogs: (state: DogsState): any[] => state.dogs
   },
   actions: {
     fetchDogsBreedList: async ({ commit }, breed: string) => {
@@ -71,10 +71,10 @@ export const store = createStore<DogsState>({
       state.isLoading = val
     },
     SAVE_DOG_BREED_LIST: (state, data: string[]) => {
-      sessionStorage.setItem('dogsBreedList', JSON.stringify(data))
+      state.dogsBreedList = data
     },
     SAVE_DOGS_DATA: (state, data: string[]) => {
-      sessionStorage.setItem('dogs', JSON.stringify(data))
+      state.dogs = data
     }
   }
 })

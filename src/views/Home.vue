@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeMount, onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 import { useStore } from 'vuex'
 import { key } from '@/store/index'
@@ -21,6 +21,9 @@ const dogsList = computed<string[]>(() => {
 })
 
 const handleBreedSelect = async (breed: string) => {
+  // clear search input
+  searchString.value = ''
+
   // init loading state
   commit('IS_LOADING', true)
 
@@ -34,9 +37,9 @@ const handleFilter = (value: string): void => {
   searchString.value = value
 }
 
-onBeforeMount(async () => {
+onMounted(async () => {
   // check if data exists in local storage
-  if (!dogsBreedList.value.length  && !dogs.value.length ) {
+  if (!dogsBreedList.value?.length  && !dogs.value?.length ) {
     // init loading state
     commit('IS_LOADING', true)
 
@@ -48,7 +51,7 @@ onBeforeMount(async () => {
     ])
       .then(() => setTimeout(() => commit('IS_LOADING', false), 2000))
       .catch(() => setTimeout(() => commit('IS_LOADING', false), 2000))
-  }
+  }  
 })
 </script>
 

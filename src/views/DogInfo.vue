@@ -1,17 +1,10 @@
 <script setup lang="ts">
-import { computed, onBeforeMount, ref } from 'vue'
+import { onBeforeMount, ref } from 'vue'
 import { useRoute } from 'vue-router'
-
-import { useStore } from 'vuex'
-import { key } from '@/store/index'
-
-const { getters } = useStore(key)
 
 const route = useRoute()
 
 const imgSrc = ref<string>('')
-
-const isLoading = computed<boolean>(() => getters._isLoading)
 
 onBeforeMount(() => {
   // update image src attribute
