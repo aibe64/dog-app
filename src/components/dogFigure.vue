@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const props = defineProps<{
+defineProps<{
   dogsList: string[]
 }>()
-
-console.log(props.dogsList)
 
 const img = ref(null)
 </script>
@@ -32,6 +30,7 @@ const img = ref(null)
 
 <style lang="scss" scoped>
 section {
+  padding: 20px 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -40,7 +39,6 @@ section {
   &>div {
     // dog wrapper
     &.card-wrapper {
-      padding: 20px 10px;
       display: flex;
       flex-flow: row wrap;
       gap: 20px 15px;
@@ -51,7 +49,7 @@ section {
         border: 1px solid rgb(237, 237, 237);
         border-radius: 5px;
         padding: 15px 20px;
-        width: 220px;
+        width: 210px;
         height: 300px;
         display: flex;
         flex-flow: row wrap;
