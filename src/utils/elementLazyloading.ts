@@ -1,3 +1,3 @@
-export function elLazyLoading (el: HTMLElement): void {
-    console.log(el)
+export function imageLazyLoading (img: HTMLImageElement): void {
+    console.log(img)
 }

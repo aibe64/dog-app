@@ -1,24 +1,38 @@
 <script setup lang="ts">
-import { onBeforeMount } from 'vue'
+import { computed, onBeforeMount, onMounted } from 'vue'
+
+import { useStore } from 'vuex'
+import { key } from '@/store/index'
 
 import Filter from '@/components/filter.vue'
 import DogFigure from '@/components/dogFigure.vue'
+import Loading from '@/components/loading.vue'
+
+const { state, getters, commit, dispatch } = useStore(key)
+
+const isLoading = computed<boolean>(() => getters._isLoading)
 
 const handleBreedSelect = (value: string): void => {
   console.log(value)
 }
 
 const handleFilter = (value: string): void => {
-  console.log(value)
+  console.log(value, state)
 }
 
 onBeforeMount(() => {
-  // console.log(1234)
+  // init loading state
+  commit('IS_LOADING', true)
+
+})
+onMounted(() => {
+  console.log(isLoading.value)
 })
 </script>
 
 <template>
-  <main>
+  <Loading v-if="isLoading" />
+  <main v-else>
     <Filter
       @breedSelect="handleBreedSelect"
       @filter="handleFilter"
