@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-
+import { ref, onMounted } from 'vue'
+import { imageObserver } from '@/utils/imageObserver'
 
 defineProps<{
   dogsList: string[]
@@ -9,28 +9,10 @@ defineProps<{
 const figure =  ref<any>(null)
 
 onMounted(() => {
-  const figures = figure.value
+  const options = {}
 
-  const imageOptions = {}
-
-  const observer = new IntersectionObserver((entries: any): void => {
-    entries.forEach((entry: any) => {
-      if (!entry.isIntersecting) return // image is not on the viewport
-
-      const imgEl = entry.target.firstElementChild?.firstElementChild as HTMLImageElement
-      const newUrl = entry.target.firstElementChild?.firstElementChild?.getAttribute('data-url') as string
-
-      imgEl?.setAttribute('src', newUrl)
-    })
-
-  }, imageOptions)
-
-  // check existense of figure element collection
-  if (figures?.length) {
-    figures.forEach((figure: HTMLElement) => {
-      observer.observe(figure)
-    })
-  }
+  // init image observer
+  if (figure?.value?.length)  imageObserver(figure.value, options)
 })
 </script>
 
