@@ -49,8 +49,8 @@ onMounted(async () => {
       // fetch dog breed list
       dispatch('fetchDogsBreedList')
     ])
-      .then(() => setTimeout(() => commit('IS_LOADING', false), 2000))
-      .catch(() => setTimeout(() => commit('IS_LOADING', false), 2000))
+      .then(() => setTimeout(() => commit('IS_LOADING', false), 1500))
+      .catch(() => setTimeout(() => commit('IS_LOADING', false), 1500))
   }  
 })
 </script>

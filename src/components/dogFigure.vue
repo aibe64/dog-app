@@ -20,18 +20,20 @@ onMounted(() => {
   <section>
     <h3 v-if="!dogsList?.length" >No record found</h3>
     <div v-else class="card-wrapper">
-      <figure v-for="(dog, index) in dogsList" :key="index" ref="figure">
-        <router-link :to="{ name: 'dog info', query: { imgSrc: JSON.stringify(dog) }}">
-          <img
-            ref="img"
-            alt="Dog image"
-            :data-url="dog"
-          />
-          <div>
-            <h5>{{ dog }}</h5>
-          </div>
-        </router-link>
-      </figure>
+        <figure v-for="(dog, index) in dogsList" :key="index"  ref="figure">
+          <router-link :to="{ name: 'dog info', query: { imgSrc: JSON.stringify(dog) }}">
+            <transition name="figure">      
+              <img
+                ref="img"
+                alt="Dog image"
+                :data-url="dog"
+              />
+            </transition>
+            <div>
+              <h5>{{ dog }}</h5>
+            </div>
+          </router-link>
+        </figure>
     </div>
   </section>
 </template>
@@ -44,6 +46,18 @@ section {
   justify-content: center;
   align-items: center;
   background-color: $route-bg;
+
+  // transition styles
+  .figure-enter-active,
+  .figure-leave-active {
+    transition: all 0.4s  ease-in-out;
+  }
+
+  .figure-enter-from,
+  .figure-leave-to {
+    opacity: 0;
+    transform: scale(1.5);
+  }
 
   &>div {
     // dog wrapper
