@@ -1,20 +1,49 @@
 <script setup lang="ts">
+import { ref, onMounted } from 'vue';
+
 
 defineProps<{
   dogsList: string[]
 }>()
+
+const figure =  ref<any>(null)
+
+onMounted(() => {
+  const figures = figure.value
+
+  const imageOptions = {}
+
+  const observer = new IntersectionObserver((entries: any): void => {
+    entries.forEach((entry: any) => {
+      if (!entry.isIntersecting) return // image is not on the viewport
+
+      const imgEl = entry.target.firstElementChild?.firstElementChild as HTMLImageElement
+      const newUrl = entry.target.firstElementChild?.firstElementChild?.getAttribute('data-url') as string
+
+      imgEl?.setAttribute('src', newUrl)
+    })
+
+  }, imageOptions)
+
+  // check existense of figure element collection
+  if (figures?.length) {
+    figures.forEach((figure: HTMLElement) => {
+      observer.observe(figure)
+    })
+  }
+})
 </script>
 
 <template>
   <section>
-    <div v-if="dogsList?.length" class="card-wrapper">
+    <h3 v-if="!dogsList?.length" >No record found</h3>
+    <div v-else class="card-wrapper">
       <figure v-for="(dog, index) in dogsList" :key="index" ref="figure">
         <router-link :to="{ name: 'dog info', query: { imgSrc: JSON.stringify(dog) }}">
           <img
             ref="img"
             alt="Dog image"
             :data-url="dog"
-            :src="dog"
           />
           <div>
             <h5>{{ dog }}</h5>
@@ -22,7 +51,6 @@ defineProps<{
         </router-link>
       </figure>
     </div>
-    <h3 v-else>No record found</h3>
   </section>
 </template>
 
